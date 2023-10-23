@@ -35,7 +35,7 @@ FROM node:alpine AS builder
 # ENV NODE_ENV production
 
 # Setting up the work directory
-WORKDIR /testapp/_work/docker-cicd/docker-cicd
+WORKDIR /testapp
 
 # Installing dependencies
 COPY ./package.json ./
@@ -51,7 +51,7 @@ RUN npm run build
 FROM nginx
 
 # Copying built assets from builder
-COPY --from=builder /testapp/_work/docker-cicd/docker-cicd/build /usr/share/nginx/html
+COPY --from=builder /testapp/build /usr/share/nginx/html
 
 # Copying our nginx.conf
 COPY nginx.conf /etc/nginx/conf.d/default.conf
